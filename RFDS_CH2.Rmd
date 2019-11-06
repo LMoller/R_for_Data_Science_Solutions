@@ -1,0 +1,62 @@
+---
+title: "RFDS_CH2"
+output: html_document
+---
+
+```{r libraries}
+library(tidyverse)
+library(ggplot2)
+```
+
+
+Alt+- is a shortcut for assignment symbol <-. This works as an r function. When I tried typing in this (text) area, it showed as a = sign. Once I tried in the console or in an r chunk, it worked.
+
+Insert an r chunk ctrl+Alt+i
+
+ctrl+(up arrow) lists all commands you've typed that start with those letters.
+
+If you want to print an assignment when you assign it, wrap it in parenthesis (my_variable <- 10)
+
+##### pg. 40
+
+#1
+
+Q: Why does this code not work?
+
+```{r pg40_1}
+my_variable <- 10
+my_varıable
+```
+
+Works in this case? but shouldn't because the i is different. Need to be specific!
+
+#2
+
+Q: Tweak each of the following R commands so that they run correctly:
+
+ggplot(dota = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))
+
+fliter(mpg, cyl = 8)
+filter(diamond, carat > 3)
+
+```{r pg40_2}
+ggplot(data = mpg) + # dota -> data
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+```{r pg_40_2b}
+filter(mpg, cyl == 8) # fliter -> filter, and '==' instead of '='
+```
+
+```{r pg_40_2c}
+filter(diamonds, carat > 3) # dataset is name diamonds
+```
+
+#3
+
+Q: Press Alt+Shift+K. What happens? How can you get to the same place using the menus?
+
+A: Keyboard Shortcuts Menu
+For more shortcuts, Tools > Keyboard Shortcuts Help
+

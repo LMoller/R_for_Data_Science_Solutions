@@ -1,0 +1,101 @@
+---
+title: "RFDS_CH3"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r libraries}
+library(nycflights13)
+library(tidyverse)
+library(ggplot2)
+```
+
+When comparing two vectors for equality, use near(). "This is a safe way of comparing if two vectors of floating point numbers are (pairwise) equal. This is safer than using ==, because it has a built in tolerance"
+
+When using filter(), & can be the same as a ,
+
+```{r example_a}
+filter(flights, arr_delay <= 120, dep_delay <= 120)
+```
+```{r example_a_1}
+filter(flights, arr_delay <= 120 & dep_delay <= 120)
+```
+
+
+##### pg. 49
+
+#1
+
+Q: Find all flights that:
+
+a. Had a n arrival delay of two or more hours
+
+```{r pg49_1a}
+filter(flights, arr_delay >= 120)
+```
+
+b. Flew to Houston (IAH or HOU)
+
+```{r pg49_1b}
+filter(flights, dest %in% c('IAH', 'HOU'))
+```
+
+c. Were operated by United, American or Delta
+
+```{r pg49_1c}
+filter(flights, carrier %in% c('UA', 'AA', 'DL'))
+```
+
+d. Departed in summer (July, August, and September)
+
+```{r pg49_1d}
+filter(flights, month %in% c('7', '8', '9'))
+```
+
+e. Arrived more than two hours late, but didn’t leave late
+
+```{r pg49_1e}
+filter(flights, arr_delay > 120 & dep_delay <= 0)
+```
+
+f. Were delayed by at least an hour, but made up over 30 minutes in flight
+
+```{r pg49_1f}
+filter(flights, dep_delay >= 60 & dep_delay - arr_delay > 30)
+```
+
+g. Departed between midnight and 6am (inclusive)
+
+check min and max of dep_time
+
+```{r pg49_1g}
+filter(flights, dep_time <= 600 | dep_time == 2400)
+```
+
+#2
+
+Q: Another useful dplyr filtering helper is between(). What does it do? Can you use it to simplify the code needed to answer the previous challenges?
+
+A: ?between = "This is a shortcut for x >= left & x <= right, implemented efficiently in C++ for local values, and translated to the appropriate SQL for remote tables.
+Usage
+between(x, left, right)"
+It would work for 1d
+
+#3
+
+Q: How many flights have a missing dep_time? What other variables are missing? What might these rows represent?
+
+```{r pg49_3}
+filter(flights, is.na(dep_time))
+```
+
+A: dep_delay, arr_time, arr_delay are all missing. They may be cancelled flights.
+
+#4
+
+Q: Why is NA ^ 0 not missing? Why is NA | TRUE not missing? Why is FALSE & NA not missing? Can you figure out the general rule? (NA * 0 is a tricky counterexample!)
+
+A: Follows mathematical rules, so the value does not matter in the examples given. For example - anything raised to 0 is going to be 1.
